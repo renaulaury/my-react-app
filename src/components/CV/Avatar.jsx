@@ -3,7 +3,7 @@ import { avatar } from '../data/myCv'
 function Avatar() {
 
     return (
-        <img src={avatar.avatar} alt="avatar" />
+        <img className="cv-avatar" src={avatar.avatar} alt="avatar" />
     )
 }
 

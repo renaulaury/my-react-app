@@ -1,7 +1,9 @@
 function Experience({ dateXp, xp, company}) {
   return (
-    <li>
-        {dateXp} : {xp} - {company}
+    <li className="cv-item">
+        <span className="cv-date">{dateXp}</span>
+        <strong className="cv-title">{xp}</strong>
+        <span className="cv-place">{company}</span>
     </li>
   )
 }

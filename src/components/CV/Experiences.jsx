@@ -5,7 +5,7 @@ function Experiences() {
 
     return (
 
-        <ul>{experiences.map((experience) => (
+        <ul className="cv-timeline">{experiences.map((experience) => (
             <Experience
             key={experience.id}
             dateXp={experience.dateXp}
