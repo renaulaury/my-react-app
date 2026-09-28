@@ -182,3 +182,35 @@
     border-right-color: var(--border);
   }
 }
+
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+.student-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 220px;
+  padding: 20px;
+  margin: 16px auto;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.student-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+}
+
+.student-infos {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
