@@ -1,0 +1,161 @@
+/* ===== Couleurs (tons bleus) ===== */
+
+.register {
+  --accent: #2563eb;
+  --accent-bg: rgba(37, 99, 235, 0.08);
+  --accent-border: rgba(37, 99, 235, 0.4);
+}
+
+@media (prefers-color-scheme: dark) {
+  .register {
+    --accent: #60a5fa;
+    --accent-bg: rgba(96, 165, 250, 0.12);
+    --accent-border: rgba(96, 165, 250, 0.45);
+  }
+}
+
+/* ===== Mise en page : formulaire à gauche, résultat à droite ===== */
+
+.register {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  width: 100%;
+  max-width: 900px;
+  padding: 0 20px 40px;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.register h2 {
+  margin-bottom: 20px;
+}
+
+.register-form,
+.register-result {
+  padding: 28px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  background: var(--bg);
+}
+
+/* ===== Formulaire ===== */
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-h);
+  }
+
+  input {
+    font: inherit;
+    font-size: 16px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text-h);
+    transition: border-color 0.2s, box-shadow 0.2s;
+
+    &:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-bg);
+    }
+  }
+}
+
+/* ===== Bouton Valider ===== */
+
+.register-form > button {
+  margin-top: 8px;
+  padding: 12px 24px;
+  font: inherit;
+  font-weight: 600;
+  color: #fff;
+  background: var(--accent);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px var(--accent-border);
+  transition: filter 0.2s, transform 0.1s, box-shadow 0.2s;
+
+  &:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 6px 16px var(--accent-border);
+  }
+
+  &:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 6px var(--accent-border);
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--accent-bg);
+    outline-offset: 2px;
+  }
+
+  /* texte foncé sur le bleu clair du mode sombre, pour rester lisible */
+  @media (prefers-color-scheme: dark) {
+    color: #0b1220;
+  }
+}
+
+/* ===== Résultat ===== */
+
+.register-result {
+  align-self: start;
+  position: sticky;
+  top: 20px;
+  background: var(--accent-bg);
+  border-color: var(--accent-border);
+
+  p {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--accent-border);
+    color: var(--text-h);
+    word-break: break-word;
+    text-align: right;
+    min-height: 1.45em;
+  }
+
+  p:last-child {
+    border-bottom: none;
+  }
+
+  span {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent);
+    text-align: left;
+    flex-shrink: 0;
+  }
+}
+
+/* ===== Petits écrans : l'un sous l'autre ===== */
+
+@media (max-width: 720px) {
+  .register {
+    grid-template-columns: 1fr;
+    padding: 0 16px 32px;
+  }
+
+  .register-result {
+    position: static;
+  }
+}
