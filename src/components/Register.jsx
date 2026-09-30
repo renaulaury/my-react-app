@@ -1,50 +1,61 @@
 import Input from './Input'
-import Modal from './Modal'
 import { useState } from 'react'
+import Modal from './Modal'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { registerSchema } from '../schemas/registerSchema'
 import './Register.css'
 
+const fields = [
+  { name: "civility", label: "Civilité", type: "radio", options: ["M.", "Mme"] },
+  { name: "name", label: "Nom", type: "text" },
+  { name: "firstName", label: "Prénom", type: "text" },
+  { name: "email", label: "Email", type: "email" },
+  { name: "birthDate", label: "Date de naissance", type: "date" },
+  { name: "codePostal", label: "Code Postal", type: "text" },
+  { name: "city", label: "Ville", type: "text" },
+]
+
 function Register() {
-  const [civility, setCivility] = useState("")
-  const [name, setName] = useState("")
-  const [firstName, setFirstName] = useState("")
-  const [email, setEmail] = useState("")
-  const [birthDate, setBirthDate] = useState("")
-  const [codePostal, setCodePostal] = useState("")
-  const [city, setCity] = useState("")
   const [showModal, setShowModal] = useState(false) //Modale cachée par défaut
+  const [formData, setFormData] = useState(null)
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+      } = useForm({ // Crée form sous objet
+        resolver: zodResolver(registerSchema),
+      })
+
+  function onSubmit(data) {
+    setFormData(data)
+    setShowModal(true)
+  }
 
   return (
     <div className="register">
-      <form className="register-form">
+      <form className="register-form" onSubmit={handleSubmit(onSubmit)}>
         <h2>Inscription</h2>
-
-        {/* Civilité */}
-        <Input type="radio" name="civility" label="Civilité" onChange={(e) => setCivility(e.target.value)} options={["M.", "Mme"]} />
-
-        {/* Identité */}
-        <Input label="Nom" type="text" onChange={(e) => setName(e.target.value)} />
-        <Input label="Prénom" type="text" onChange={(e) => setFirstName(e.target.value)} />
-        <Input label="Email" type="email" onChange={(e) => setEmail(e.target.value)} />
-        <Input label="Date de naissance" type="date" onChange={(e) => setBirthDate(e.target.value)} />
-        <Input label="Code Postal" type="text" onChange={(e) => setCodePostal(e.target.value)} />
-        <Input label="Ville" type="text" onChange={(e) => setCity(e.target.value)} />
+        
+        {fields.map((field) => (
+          <Input
+            key={field.name}
+            label={field.label}
+            type={field.type}
+            options={field.options}
+            {...register(field.name)}
+            error={errors[field.name]?.message}
+          />
+        ))}
 
         {/* Validation / Modale */}
-        <button type="button" onClick={() => setShowModal(true)}>Valider</button>
+        <button type="submit">Valider</button>
       </form>
 
     {/* Modale */}
       {showModal && (
-        <Modal
-          civility={civility}
-          name={name}
-          firstName={firstName}
-          email={email}
-          birthDate={birthDate}
-          codePostal={codePostal}
-          city={city}
-          onClose={() => setShowModal(false)}
-        />
+        <Modal {...formData} onClose={() => setShowModal(false)} />
       )}
     </div>
   )

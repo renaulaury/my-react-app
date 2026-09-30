@@ -75,11 +75,17 @@
       box-shadow: 0 0 0 3px var(--accent-bg);
     }
   }
+
+  .error {
+    color: red;
+    font-size: 0.85rem;
+  }
 }
 
-/* ===== Bouton Valider ===== */
+/* ===== Boutons Valider / Fermer ===== */
 
-.register-form > button {
+.register-form > button,
+.register-result > button {
   margin-top: 8px;
   padding: 12px 24px;
   font: inherit;
@@ -134,8 +140,13 @@
     min-height: 1.45em;
   }
 
-  p:last-child {
+  p:last-of-type {
     border-bottom: none;
+  }
+
+  > button {
+    width: 100%;
+    margin-top: 20px;
   }
 
   span {

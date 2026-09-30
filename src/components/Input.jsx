@@ -1,4 +1,4 @@
-function Input({ label, type, name, options, onChange }) {
+function Input({ label, type, options, error, ...rest }) {
   // Bouton radio 
   if (type === "radio") {
     return (
@@ -6,9 +6,10 @@ function Input({ label, type, name, options, onChange }) {
         <p>{label}</p>
         {options.map((option) => (
           <label key={option}>
-            <input type="radio" name={name} value={option} onChange={onChange} /> {option}
+            <input type="radio" value={option} {...rest} /> {option}
           </label>
         ))}
+        {error && <p className="error">{error}</p>}
       </div>
     )
   }
@@ -17,7 +18,8 @@ function Input({ label, type, name, options, onChange }) {
   return (
     <div className="field">
       <label>{label}</label>
-      <input type={type} onChange={onChange} />
+      <input type={type} {...rest}/>
+      {error && <p className="error">{error}</p>}
     </div>
   )
 }
