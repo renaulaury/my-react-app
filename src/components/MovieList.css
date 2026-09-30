@@ -1,0 +1,50 @@
+.movie-list {
+  padding: 0 24px;
+  text-align: left;
+
+  @media (max-width: 600px) {
+    padding: 0 16px;
+  }
+}
+
+.movie-list__title {
+  margin-bottom: 16px;
+}
+
+/* rangée horizontale façon Netflix : une seule ligne, défilement latéral */
+.movie-list__grid {
+  list-style: none;
+  margin: 0;
+  padding: 8px 0 16px; /* place pour le hover (translateY) et la scrollbar */
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+
+  /* scrollbar discrète (Firefox) */
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+
+  /* scrollbar discrète (Chrome, Edge, Safari) */
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.6);
+  }
+
+  @media (max-width: 600px) {
+    gap: 16px;
+  }
+}

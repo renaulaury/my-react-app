@@ -1,0 +1,31 @@
+.movie-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 0 0 160px; /* largeur fixe : ni étirée, ni écrasée */
+  scroll-snap-align: start;
+  transition: transform 0.2s;
+
+  @media (max-width: 600px) {
+    flex-basis: 120px;
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+}
+
+.movie-card__poster {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 8px;
+  background: var(--code-bg);
+  box-shadow: var(--shadow);
+}
+
+.movie-card__title {
+  font-size: 15px;
+  line-height: 130%;
+  color: var(--text-h);
+}
