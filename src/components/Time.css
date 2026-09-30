@@ -1,0 +1,39 @@
+/* Empile BOOM, l'image et le bouton */
+.boom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.boom p {
+  margin: 0;
+  font-size: 32px;
+  font-weight: bold;
+  color: #e53935;
+}
+
+/* Bouton Réinit */
+.boom-reset {
+  font-size: 16px;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  background: #1e88e5;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.boom-reset:hover {
+  background: #1565c0;
+}
+
+.boom-reset:active {
+  transform: scale(0.95);
+}
+
+.boom-reset:focus-visible {
+  outline: 2px solid #1e88e5;
+  outline-offset: 2px;
+}
