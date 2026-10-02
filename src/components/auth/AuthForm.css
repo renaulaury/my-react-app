@@ -1,0 +1,80 @@
+/* formulaire login / register : carte centrée, même style que la nav */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 32px 24px;
+  text-align: left;
+  background-color: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-sizing: border-box;
+
+  & h2 {
+    margin: 0 0 8px;
+    text-align: center;
+  }
+
+  & label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 15px;
+  }
+
+  & input {
+    min-height: 44px;
+    padding: 10px 16px;
+    font: inherit;
+    font-size: 15px;
+    color: var(--text-h);
+    background-color: transparent;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    &:focus-visible {
+      outline: 2px solid #fff;
+      outline-offset: 2px;
+    }
+  }
+
+  & button {
+    min-height: 44px;
+    margin-top: 8px;
+    font: inherit;
+    font-size: 15px;
+    font-weight: 500;
+    color: #000;
+    background-color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: wait;
+    }
+  }
+
+  & p {
+    margin: 0;
+    text-align: center;
+  }
+
+  & a {
+    color: var(--text-h);
+  }
+}
+
+/* aide sous le champ mdp : petit et discret */
+.auth-form__hint {
+  font-size: 13px;
+  opacity: 0.7;
+}
+
+.auth-form__error {
+  color: #ff6b6b;
+}

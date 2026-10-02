@@ -32,6 +32,12 @@ export async function fetchGenres() {
   return data.genres
 }
 
+// génère un token de requête (authentification)
+export async function fetchRequestToken() {
+  const data = await fetchTmdb('authentication/token/new')
+  return data.request_token
+}
+
 // 1appel
 // export async function fetchMovies(endpoint) {
 //     const response = await fetch( //recup films 
