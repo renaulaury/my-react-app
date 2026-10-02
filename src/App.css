@@ -68,6 +68,29 @@
     background-position: right 20px center;
   }
 
+  /* recherche : champ + bouton côte à côte */
+  & .search-bar {
+    display: flex;
+    gap: 8px;
+  }
+
+  & .search-bar__input {
+    min-height: 44px;
+    min-width: 0;
+    padding: 10px 16px;
+    font: inherit;
+    font-size: 15px;
+    color: var(--text-h);
+    background-color: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    &:focus-visible {
+      outline: 2px solid #fff;
+      outline-offset: 2px;
+    }
+  }
+
   /* options du menu déroulant lisibles sur fond sombre */
   & option {
     color: var(--text-h);

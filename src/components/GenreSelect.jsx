@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { fetchGenres } from '../services/tmdb-api' //appel api genres
+import Loader from './Loader'
 
 function GenreSelect({ value, onSelect }) {
   const [genres, setGenres] = useState([]) //liste genres
@@ -23,14 +24,10 @@ function GenreSelect({ value, onSelect }) {
   }, []) // aucune prop utilisée : tableau vide, un seul appel
 
   //pdt le chargement ptit loader
-  if (isLoading) {
-    return <p>Chargement des genres...</p>
-  }
+  if (isLoading) return <Loader size="small" />
 
   //si erreur: ptit msg
-  if (error) {
-    return <p>{error}</p>
-  }
+  if (error) return <p>{error}</p>
 
   // liste déroulante : une option par genre
   return (

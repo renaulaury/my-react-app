@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { fetchMovies } from '../services/tmdb-api' //appel api
 import MovieCard from './MovieCard'
+import Loader from './Loader'
 import './MovieList.css'
 
 function MovieList({ title, endpoint }) {
@@ -26,9 +27,7 @@ function MovieList({ title, endpoint }) {
   }, [endpoint])
 
   //pdt le chargement ptit loader
-  if (isLoading) {
-      return <p>Chargement...</p>
-    }
+  if (isLoading) return <Loader />
 
   //si erreur: ptit msg  
   if (error) {
@@ -38,6 +37,8 @@ function MovieList({ title, endpoint }) {
   return (
     <section className="movie-list">
       <h2 className="movie-list__title">{title}</h2>
+      {/* aucun résultat (ex: recherche sans match) */}
+      {movies.length === 0 && <p>Aucun film trouvé.</p>}
       <ul className="movie-list__grid">
         {movies.map((movie) => (
           <MovieCard key={movie.id} movie={movie} />
