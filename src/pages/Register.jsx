@@ -13,8 +13,8 @@ export default function Register() {
 
   if (token) return <Navigate to="/characters" replace />
 
-  async function handleSubmit(e) {
-    e.preventDefault()
+  async function handleSubmit(event) {
+    event.preventDefault()
     setError('')
     setSubmitting(true)
     try {
@@ -35,7 +35,7 @@ export default function Register() {
         Nom d'utilisateur
         <input
           value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(event) => setUsername(event.target.value)}
           minLength={3}
           maxLength={32}
           pattern="[A-Za-z0-9_.\-]+"
@@ -45,14 +45,14 @@ export default function Register() {
       </label>
       <label>
         E-mail
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+        <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} required />
       </label>
       <label>
         Mot de passe (8 caractères min.)
         <input
           type="password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(event) => setPassword(event.target.value)}
           minLength={8}
           required
         />

@@ -8,7 +8,7 @@ async function request(path, options = {}) {
   const data = await res.json().catch(() => ({}))
   if (!res.ok) {
     // L'API renvoie { error, message, details: [{ field, message }] }
-    const details = data.details?.map((d) => d.message).join(' ')
+    const details = data.details?.map((detail) => detail.message).join(' ')
     throw new Error(details || data.message || 'Une erreur est survenue.')
   }
   return data

@@ -12,8 +12,8 @@ export default function Login() {
 
   if (token) return <Navigate to="/characters" replace />
 
-  async function handleSubmit(e) {
-    e.preventDefault()
+  async function handleSubmit(event) {
+    event.preventDefault()
     setError('')
     setSubmitting(true)
     try {
@@ -32,11 +32,11 @@ export default function Login() {
       {error && <p className="error">{error}</p>}
       <label>
         E-mail
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+        <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} required />
       </label>
       <label>
         Mot de passe
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+        <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} required />
       </label>
       <button type="submit" disabled={submitting}>
         {submitting ? 'Connexion…' : 'Se connecter'}

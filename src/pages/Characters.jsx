@@ -10,15 +10,16 @@ export default function Characters() {
   const [quotes, setQuotes] = useState({})
 
   // Choisit une réplique au hasard, différente de la précédente si possible
-  function showRandomQuote(c) {
-    const phrases = c.phrases ?? []
+  function showRandomQuote(character) {
+    const phrases = character.phrases ?? []
     if (!phrases.length) {
-      setQuotes((q) => ({ ...q, [c.id]: null }))
+      setQuotes((previousQuotes) => ({ ...previousQuotes, [character.id]: null }))
       return
     }
-    const candidates = phrases.length > 1 ? phrases.filter((p) => p !== quotes[c.id]) : phrases
+    const candidates =
+      phrases.length > 1 ? phrases.filter((phrase) => phrase !== quotes[character.id]) : phrases
     const phrase = candidates[Math.floor(Math.random() * candidates.length)]
-    setQuotes((q) => ({ ...q, [c.id]: phrase }))
+    setQuotes((previousQuotes) => ({ ...previousQuotes, [character.id]: phrase }))
   }
 
   useEffect(() => {
@@ -34,27 +35,29 @@ export default function Characters() {
     <section>
       <h1>Personnages</h1>
       <div className="grid">
-        {data.results.map((c) => (
+        {data.results.map((character) => (
           <div
-            key={c.id}
+            key={character.id}
             className="card character"
             role="button"
             tabIndex={0}
             title="Cliquer pour une citation"
-            onClick={() => showRandomQuote(c)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault()
-                showRandomQuote(c)
+            onClick={() => showRandomQuote(character)}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault()
+                showRandomQuote(character)
               }
             }}
           >
-            <img src={imageUrl(c.portrait_path)} alt={c.name} loading="lazy" />
-            <h3>{c.name}</h3>
-            <small>{c.occupation}</small>
-            {c.id in quotes && (
+            <img src={imageUrl(character.portrait_path)} alt={character.name} loading="lazy" />
+            <h3>{character.name}</h3>
+            <small>{character.occupation}</small>
+            {character.id in quotes && (
               <p className="bubble" aria-live="polite">
-                {quotes[c.id] ? `« ${quotes[c.id]} »` : 'Aucune citation pour ce personnage.'}
+                {quotes[character.id]
+                  ? `« ${quotes[character.id]} »`
+                  : 'Aucune citation pour ce personnage.'}
               </p>
             )}
           </div>

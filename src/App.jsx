@@ -5,6 +5,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Characters from './pages/Characters'
 import Quote from './pages/Quote'
+import QuoteDetail from './pages/QuoteDetail'
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="/characters" element={<Characters />} />
             <Route path="/quote" element={<Quote />} />
+            <Route path="/quote/:id" element={<QuoteDetail />} />
           </Route>
           <Route path="*" element={<Navigate to="/characters" replace />} />
         </Routes>
