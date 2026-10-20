@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { getCharacter, imageUrl } from '../api/simpsons'
+import { LanguageContext } from '../context/LanguageContext'
 
 // Choisit une réplique au hasard, différente de `previous` si possible
 function pickRandom(phrases, previous) {
@@ -10,38 +11,39 @@ function pickRandom(phrases, previous) {
 }
 
 export default function QuoteDetail() {
+  const { texts } = useContext(LanguageContext)
   const { id } = useParams()
   const [character, setCharacter] = useState(null)
   const [quote, setQuote] = useState(null)
-  const [error, setError] = useState('')
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     setCharacter(null)
-    setError('')
+    setError(false)
     getCharacter(id)
       .then((data) => {
         setCharacter(data)
         setQuote(pickRandom(data.phrases))
       })
-      .catch((err) => setError(err.message))
+      .catch(() => setError(true))
   }, [id])
 
-  if (error) return <p className="error center">{error}</p>
-  if (!character) return <p className="center">Chargement…</p>
+  if (error) return <p className="error center">{texts.apiError}</p>
+  if (!character) return <p className="center">{texts.loading}</p>
 
   return (
     <section>
-      <Link to="/quote">← Retour aux citations</Link>
+      <Link to="/quote">{texts.quotes.back}</Link>
       <h1>{character.name}</h1>
       <div className="card quotes">
         <img src={imageUrl(character.portrait_path)} alt={character.name} />
         <div className="quote-body">
           <p className="bubble" aria-live="polite">
-            {quote ? `« ${quote} »` : 'Aucune citation pour ce personnage.'}
+            {quote ? texts.quote(quote) : texts.noQuote}
           </p>
           {character.phrases?.length > 1 && (
             <button onClick={() => setQuote(pickRandom(character.phrases, quote))}>
-              Une autre citation
+              {texts.quotes.another}
             </button>
           )}
         </div>

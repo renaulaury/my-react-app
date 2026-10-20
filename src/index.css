@@ -3,9 +3,35 @@
   --blue: #70d1fe;
   --dark: #2f2f2f;
   --red: #d6301e;
+
+  /* Couleurs qui changent selon le thème (clair par défaut) */
+  --bg: var(--blue);
+  --surface: #fff;
+  --text: var(--dark);
+  --border: var(--dark);
+  --nav-bg: var(--yellow);
+  --nav-text: var(--dark);
+  --link: #1a5fb4;
+  --input-border: #aaa;
+
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
-  color: var(--dark);
+  color: var(--text);
+  color-scheme: light;
+}
+
+/* Thème sombre : activé par data-theme="dark" sur <html> (voir ThemeContext) */
+:root[data-theme="dark"] {
+  --bg: #13212c;
+  --surface: #24303a;
+  --text: #ececec;
+  --border: #8a9aa6;
+  --nav-bg: #1b1b1b;
+  --nav-text: var(--yellow);
+  --link: var(--blue);
+  --input-border: #5c6b77;
+  --red: #ff6b5b;
+  color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
@@ -13,10 +39,11 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background: var(--blue);
+  background: var(--bg);
+  transition: background 0.2s, color 0.2s;
 }
 
-a { color: #1a5fb4; }
+a { color: var(--link); }
 
 main {
   max-width: 1100px;
@@ -26,7 +53,8 @@ main {
 
 button {
   background: var(--yellow);
-  border: 2px solid var(--dark);
+  color: var(--dark);
+  border: 2px solid var(--border);
   border-radius: 8px;
   padding: 8px 16px;
   font-weight: 600;
@@ -44,20 +72,39 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
   align-items: center;
   gap: 16px;
   padding: 12px 24px;
-  background: var(--yellow);
-  border-bottom: 3px solid var(--dark);
+  background: var(--nav-bg);
+  color: var(--nav-text);
+  border-bottom: 3px solid var(--border);
 }
 .logo { font-size: 1.5rem; font-weight: 800; }
 .links { display: flex; gap: 16px; }
-.links a { color: var(--dark); text-decoration: none; font-weight: 600; }
+.links a { color: var(--nav-text); text-decoration: none; font-weight: 600; }
 .links a.active { text-decoration: underline; }
 .user { margin-left: auto; display: flex; align-items: center; gap: 12px; }
-.user button { background: #fff; }
+.user button { background: var(--surface); color: var(--text); }
+.theme-toggle { background: var(--surface); color: var(--text); }
+/* Déconnecté (pas de .user) : les drapeaux sont poussés à droite eux-mêmes */
+.links + .lang-switcher { margin-left: auto; }
+
+/* Sélecteur de langue (drapeaux) */
+.lang-switcher { display: flex; gap: 6px; }
+.flag {
+  display: flex;
+  padding: 2px;
+  background: transparent;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  opacity: 0.55;
+}
+.flag:hover, .flag:focus-visible { opacity: 1; }
+.flag.active { border-color: var(--nav-text); opacity: 1; }
+.flag img { width: 28px; height: 18px; object-fit: cover; display: block; }
 
 /* Cartes */
 .card {
-  background: #fff;
-  border: 3px solid var(--dark);
+  background: var(--surface);
+  color: var(--text);
+  border: 3px solid var(--border);
   border-radius: 12px;
   padding: 16px;
 }
@@ -72,7 +119,14 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 }
 .form h1 { margin: 0; }
 .form label { display: flex; flex-direction: column; gap: 4px; font-weight: 600; }
-.form input { padding: 8px; border: 2px solid #aaa; border-radius: 6px; font-size: 1rem; }
+.form input {
+  padding: 8px;
+  border: 2px solid var(--input-border);
+  border-radius: 6px;
+  font-size: 1rem;
+  background: var(--surface);
+  color: var(--text);
+}
 
 /* Liste des personnages */
 .grid {
@@ -89,7 +143,8 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
   margin: 12px 0 0;
   padding: 8px 12px;
   background: var(--yellow);
-  border: 2px solid var(--dark);
+  color: var(--dark);
+  border: 2px solid var(--border);
   border-radius: 12px;
   font-style: italic;
   font-size: 0.9rem;
@@ -105,16 +160,16 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 /* Citations */
 .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
 .tab {
-  background: #fff;
-  border: 2px solid var(--dark);
+  background: var(--surface);
+  border: 2px solid var(--border);
   border-radius: 8px;
   padding: 6px 12px;
   font-size: 0.9rem;
   font-weight: 600;
-  color: var(--dark);
+  color: var(--text);
   text-decoration: none;
 }
-.tab:hover, .tab:focus-visible { background: var(--yellow); }
+.tab:hover, .tab:focus-visible { background: var(--yellow); color: var(--dark); }
 .quotes { display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start; margin-top: 16px; }
 .quotes img { width: 180px; max-width: 100%; object-fit: contain; }
 .quote-body { flex: 1; min-width: 250px; display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }

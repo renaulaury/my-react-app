@@ -1,12 +1,14 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { getCharacters, imageUrl } from '../api/simpsons'
+import { LanguageContext } from '../context/LanguageContext'
 
 export default function Characters() {
+  const { texts } = useContext(LanguageContext)
   const [searchParams, setSearchParams] = useSearchParams()
   const page = Number(searchParams.get('page')) || 1
   const [data, setData] = useState(null)
-  const [error, setError] = useState('')
+  const [error, setError] = useState(false)
   const [quotes, setQuotes] = useState({})
 
   // Choisit une réplique au hasard, différente de la précédente si possible
@@ -24,16 +26,16 @@ export default function Characters() {
 
   useEffect(() => {
     setData(null)
-    setError('')
-    getCharacters(page).then(setData).catch((err) => setError(err.message))
+    setError(false)
+    getCharacters(page).then(setData).catch(() => setError(true))
   }, [page])
 
-  if (error) return <p className="error center">{error}</p>
-  if (!data) return <p className="center">Chargement…</p>
+  if (error) return <p className="error center">{texts.apiError}</p>
+  if (!data) return <p className="center">{texts.loading}</p>
 
   return (
     <section>
-      <h1>Personnages</h1>
+      <h1>{texts.characters.title}</h1>
       <div className="grid">
         {data.results.map((character) => (
           <div
@@ -41,7 +43,7 @@ export default function Characters() {
             className="card character"
             role="button"
             tabIndex={0}
-            title="Cliquer pour une citation"
+            title={texts.characters.clickForQuote}
             onClick={() => showRandomQuote(character)}
             onKeyDown={(event) => {
               if (event.key === 'Enter' || event.key === ' ') {
@@ -55,9 +57,7 @@ export default function Characters() {
             <small>{character.occupation}</small>
             {character.id in quotes && (
               <p className="bubble" aria-live="polite">
-                {quotes[character.id]
-                  ? `« ${quotes[character.id]} »`
-                  : 'Aucune citation pour ce personnage.'}
+                {quotes[character.id] ? texts.quote(quotes[character.id]) : texts.noQuote}
               </p>
             )}
           </div>
@@ -65,13 +65,11 @@ export default function Characters() {
       </div>
       <div className="pagination">
         <button disabled={!data.prev} onClick={() => setSearchParams({ page: page - 1 })}>
-          ← Précédent
+          {texts.characters.previous}
         </button>
-        <span>
-          Page {page} / {data.pages}
-        </span>
+        <span>{texts.characters.page(page, data.pages)}</span>
         <button disabled={!data.next} onClick={() => setSearchParams({ page: page + 1 })}>
-          Suivant →
+          {texts.characters.next}
         </button>
       </div>
     </section>

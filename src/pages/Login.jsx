@@ -1,9 +1,11 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { LanguageContext } from '../context/LanguageContext'
 
 export default function Login() {
   const { token, login } = useAuth()
+  const { texts } = useContext(LanguageContext)
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -28,21 +30,21 @@ export default function Login() {
 
   return (
     <form className="card form" onSubmit={handleSubmit}>
-      <h1>Connexion</h1>
+      <h1>{texts.login.title}</h1>
       {error && <p className="error">{error}</p>}
       <label>
-        E-mail
+        {texts.login.email}
         <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} required />
       </label>
       <label>
-        Mot de passe
+        {texts.login.password}
         <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} required />
       </label>
       <button type="submit" disabled={submitting}>
-        {submitting ? 'Connexion…' : 'Se connecter'}
+        {submitting ? texts.login.submitting : texts.login.submit}
       </button>
       <p>
-        Pas encore de compte ? <Link to="/register">Inscrivez-vous</Link>
+        {texts.login.noAccount} <Link to="/register">{texts.login.registerLink}</Link>
       </p>
     </form>
   )

@@ -1,9 +1,11 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { LanguageContext } from '../context/LanguageContext'
 
 export default function Register() {
   const { token, register } = useAuth()
+  const { texts } = useContext(LanguageContext)
   const navigate = useNavigate()
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
@@ -29,26 +31,26 @@ export default function Register() {
 
   return (
     <form className="card form" onSubmit={handleSubmit}>
-      <h1>Inscription</h1>
+      <h1>{texts.register.title}</h1>
       {error && <p className="error">{error}</p>}
       <label>
-        Nom d'utilisateur
+        {texts.register.username}
         <input
           value={username}
           onChange={(event) => setUsername(event.target.value)}
           minLength={3}
           maxLength={32}
           pattern="[A-Za-z0-9_.\-]+"
-          title="3 à 32 caractères : lettres, chiffres, _ . -"
+          title={texts.register.usernameHint}
           required
         />
       </label>
       <label>
-        E-mail
+        {texts.register.email}
         <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} required />
       </label>
       <label>
-        Mot de passe (8 caractères min.)
+        {texts.register.password}
         <input
           type="password"
           value={password}
@@ -58,10 +60,10 @@ export default function Register() {
         />
       </label>
       <button type="submit" disabled={submitting}>
-        {submitting ? 'Inscription…' : "S'inscrire"}
+        {submitting ? texts.register.submitting : texts.register.submit}
       </button>
       <p>
-        Déjà inscrit ? <Link to="/login">Connectez-vous</Link>
+        {texts.register.alreadyRegistered} <Link to="/login">{texts.register.loginLink}</Link>
       </p>
     </form>
   )
