@@ -38,7 +38,6 @@ export const translations = {
     },
     characters: {
       title: 'Personnages',
-      clickForQuote: 'Cliquer pour une citation',
       previous: '← Précédent',
       next: 'Suivant →',
       page: (page, pages) => `Page ${page} / ${pages}`,
@@ -88,7 +87,6 @@ export const translations = {
     },
     characters: {
       title: 'Characters',
-      clickForQuote: 'Click for a quote',
       previous: '← Previous',
       next: 'Next →',
       page: (page, pages) => `Page ${page} / ${pages}`,

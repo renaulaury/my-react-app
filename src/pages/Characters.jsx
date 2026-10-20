@@ -1,7 +1,16 @@
 import { useContext, useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
+import styled from 'styled-components'
 import { getCharacters, imageUrl } from '../api/simpsons'
 import { LanguageContext } from '../context/LanguageContext'
+
+// composant styled
+// Carte personnage : le fond devient rose quand sélectionnée ($active)
+const CharacterCard = styled.div`
+  background: ${(props) => (props.$active ? '#f8b8d0' : 'var(--surface)')};
+  color: ${(props) => (props.$active ? 'var(--dark)' : 'var(--text)')};
+  transition: background 0.3s, transform 0.1s;
+`
 
 export default function Characters() {
   const { texts } = useContext(LanguageContext)
@@ -9,19 +18,11 @@ export default function Characters() {
   const page = Number(searchParams.get('page')) || 1
   const [data, setData] = useState(null)
   const [error, setError] = useState(false)
-  const [quotes, setQuotes] = useState({})
+  const [selectedId, setSelectedId] = useState(null)
 
-  // Choisit une réplique au hasard, différente de la précédente si possible
-  function showRandomQuote(character) {
-    const phrases = character.phrases ?? []
-    if (!phrases.length) {
-      setQuotes((previousQuotes) => ({ ...previousQuotes, [character.id]: null }))
-      return
-    }
-    const candidates =
-      phrases.length > 1 ? phrases.filter((phrase) => phrase !== quotes[character.id]) : phrases
-    const phrase = candidates[Math.floor(Math.random() * candidates.length)]
-    setQuotes((previousQuotes) => ({ ...previousQuotes, [character.id]: phrase }))
+  // Sélect/déselect card 
+  function toggleCharacter(id) {
+    setSelectedId((currentId) => (currentId === id ? null : id))
   }
 
   useEffect(() => {
@@ -38,29 +39,16 @@ export default function Characters() {
       <h1>{texts.characters.title}</h1>
       <div className="grid">
         {data.results.map((character) => (
-          <div
+          <CharacterCard
             key={character.id}
             className="card character"
-            role="button"
-            tabIndex={0}
-            title={texts.characters.clickForQuote}
-            onClick={() => showRandomQuote(character)}
-            onKeyDown={(event) => {
-              if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault()
-                showRandomQuote(character)
-              }
-            }}
+            $active={character.id === selectedId}
+            onClick={() => toggleCharacter(character.id)}
           >
             <img src={imageUrl(character.portrait_path)} alt={character.name} loading="lazy" />
             <h3>{character.name}</h3>
             <small>{character.occupation}</small>
-            {character.id in quotes && (
-              <p className="bubble" aria-live="polite">
-                {quotes[character.id] ? texts.quote(quotes[character.id]) : texts.noQuote}
-              </p>
-            )}
-          </div>
+          </CharacterCard>
         ))}
       </div>
       <div className="pagination">

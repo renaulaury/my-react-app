@@ -137,8 +137,6 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 .character { text-align: center; min-width: 0; overflow-wrap: anywhere; }
 .character img { width: 100%; aspect-ratio: 1; object-fit: contain; }
 .character h3 { margin: 8px 0 4px; font-size: 1.1rem; line-height: 1.25; }
-.character { cursor: pointer; transition: transform 0.1s; }
-.character:hover, .character:focus-visible { transform: translateY(-3px); }
 .bubble {
   margin: 12px 0 0;
   padding: 8px 12px;
