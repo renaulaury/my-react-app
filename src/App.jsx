@@ -1,9 +1,14 @@
 import './App.css'
+import Liker from './pages/Liker/Liker'
+import LikerHold from './pages/Liker/LikerHold'
+import LikerMouseDown from './pages/Liker/LikerMouseDown'
 
 function App() {
   return (
     <section id="center">
-      <h1>Projet React + Vite</h1>
+      <Liker />
+      <LikerHold />
+      <LikerMouseDown />
     </section>
   )
 }
