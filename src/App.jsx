@@ -1,9 +1,10 @@
 import './App.css'
+import Counter from './pages/Counter/Counter'
 
 function App() {
   return (
     <section id="center">
-      <h1>Projet React + Vite</h1>
+      <Counter />
     </section>
   )
 }
